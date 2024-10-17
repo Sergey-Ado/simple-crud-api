@@ -1,7 +1,8 @@
 import { IncomingMessage } from 'http';
 import { validate } from 'uuid';
+import { Res } from './types';
 
-export function parseURL(url: string | undefined) {
+export function parseURL(url: string | undefined): Res {
   if (!url) url = '/';
   if (url.slice(-1) != '/') url += '/';
   console.log(url);
@@ -17,7 +18,7 @@ export function parseURL(url: string | undefined) {
   return { code: 404, message: 'Requests to non-existing endpoints' };
 }
 
-export async function readBody(req: IncomingMessage) {
+export async function readBody(req: IncomingMessage): Promise<string> {
   return new Promise((res, rej) => {
     let body = '';
     req.setEncoding('utf-8');
