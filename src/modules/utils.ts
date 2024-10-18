@@ -1,8 +1,8 @@
 import { IncomingMessage } from 'http';
 import { validate } from 'uuid';
-import { Res, User } from './types';
+import { ParseMessage, User } from './types';
 
-export function parseURL(url: string | undefined): Res {
+export function parseURL(url: string | undefined): ParseMessage {
   if (!url) url = '/';
   if (url.slice(-1) != '/') url += '/';
   const members = url.split('/');

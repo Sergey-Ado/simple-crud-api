@@ -17,7 +17,7 @@ export async function databaseHandler(
       const response = controller(req.method, parse.message, body);
       res.setHeader('content-type', 'application/json');
       res.statusCode = response.code;
-      res.write(response.message);
+      res.write(JSON.stringify(response.message));
       res.end();
     }
   } catch (e) {
