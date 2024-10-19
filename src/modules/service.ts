@@ -6,8 +6,7 @@ const dataBase: User[] = [];
 
 export function get(id: string): ResponseMessage {
   const user = dataBase.find((s) => s.id == id);
-  if (!user)
-    return { code: 404, message: JSON.stringify('UserId does not exist') };
+  if (!user) return { code: 404, message: 'UserId does not exist' };
   return { code: 200, message: user };
 }
 
@@ -28,17 +27,17 @@ export function post(id: string, body: string): ResponseMessage {
 }
 
 export function put(id: string, body: string): ResponseMessage {
-  if (!body) return { code: 400, message: 'Empty body' };
-
-  const userBody: User = JSON.parse(body);
-  const resValidate = validateBody(userBody);
-  if (resValidate) return { code: 400, message: resValidate };
-
   const user = dataBase.find((s) => s.id == id);
 
   if (!user) return { code: 404, message: "UserId doesn't exist" };
 
+  if (!body) return { code: 400, message: 'Empty body' };
+
+  const userBody: User = JSON.parse(body);
+  const resValidate = validateBody(userBody);
   user.username = userBody.username;
+  if (resValidate) return { code: 400, message: resValidate };
+
   user.age = userBody.age;
   user.hobbies = userBody.hobbies;
   return { code: 200, message: user };
@@ -47,6 +46,7 @@ export function put(id: string, body: string): ResponseMessage {
 export function remove(id: string): ResponseMessage {
   const userIndex = dataBase.findIndex((s) => s.id == id);
   if (userIndex == -1) return { code: 404, message: "UserId doesn't exist" };
+
   dataBase.splice(userIndex, 1);
   return { code: 204, message: '' };
 }

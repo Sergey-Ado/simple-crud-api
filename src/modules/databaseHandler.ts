@@ -10,7 +10,7 @@ export async function databaseHandler(
     const parse = parseURL(req.url);
     if (parse.code == 400 || parse.code == 404) {
       res.statusCode = parse.code;
-      res.write(parse.message);
+      res.write(JSON.stringify(parse.message));
       res.end();
     } else {
       const body = await readBody(req);
@@ -22,7 +22,7 @@ export async function databaseHandler(
     }
   } catch (e) {
     res.statusCode = 500;
-    res.write('Errors on the server side');
+    res.write(JSON.stringify('Errors on the server side'));
     res.end();
   }
 }
