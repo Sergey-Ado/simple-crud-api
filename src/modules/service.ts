@@ -35,9 +35,9 @@ export function put(id: string, body: string): ResponseMessage {
 
   const userBody: User = JSON.parse(body);
   const resValidate = validateBody(userBody);
-  user.username = userBody.username;
   if (resValidate) return { code: 400, message: resValidate };
 
+  user.username = userBody.username;
   user.age = userBody.age;
   user.hobbies = userBody.hobbies;
   return { code: 200, message: user };

@@ -2,23 +2,23 @@ import request from 'supertest';
 import { User } from '../modules/types';
 import 'dotenv/config';
 
+const req = request(`http://localhost:${process.env.PORT || 3000}/`);
+const endpoint = 'api/users/';
+
+const user: User = {
+  username: 'John Doe',
+  age: 42,
+  hobbies: ['hobby1', 'hobby2'],
+};
+
+const cleanDataBase = async () => {
+  const users = await req.get(endpoint);
+  users.body.forEach(
+    async (user: User) => await req.delete(endpoint + user.id)
+  );
+};
+
 describe('server should perform basic operations', () => {
-  const req = request(`http://localhost:${process.env.PORT || 3000}/`);
-  const endpoint = 'api/users/';
-
-  const user: User = {
-    username: 'John Doe',
-    age: 42,
-    hobbies: ['hobby1', 'hobby2'],
-  };
-
-  const cleanDataBase = async () => {
-    const users = await req.get(endpoint);
-    users.body.forEach(
-      async (user: User) => await req.delete(endpoint + user.id)
-    );
-  };
-
   beforeAll(cleanDataBase);
   afterAll(cleanDataBase);
 

@@ -1,20 +1,20 @@
 import request from 'supertest';
+import { User } from '../modules/types';
 import 'dotenv/config';
 import { v4 as uuid } from 'uuid';
-import { User } from '../modules/types';
 
 const req = request(`http://localhost:${process.env.PORT || 3000}/`);
 const endpoint = 'api/users/';
 const randomUUID = uuid();
 
-describe('Server should respond with correct status codes if path provided is invalid', () => {
-  const cleanDataBase = async () => {
-    const users = await req.get(endpoint);
-    users.body.forEach(
-      async (user: User) => await req.delete(endpoint + user.id)
-    );
-  };
+const cleanDataBase = async () => {
+  const users = await req.get(endpoint);
+  users.body.forEach(
+    async (user: User) => await req.delete(endpoint + user.id)
+  );
+};
 
+describe('Server should respond with correct status codes if path provided is invalid', () => {
   beforeAll(cleanDataBase);
   afterAll(cleanDataBase);
 

@@ -28,13 +28,23 @@ export async function readBody(req: IncomingMessage): Promise<string> {
   });
 }
 
-export function validateBody(body: Omit<User, 'id'>): string {
-  if (typeof body.username != 'string' || body.username == '')
-    return 'Invalid username';
-  if (typeof body.age != 'number' || body.age <= 0) return 'Invalid age';
-  if (!Array.isArray(body.hobbies)) return 'Invalid hobbies';
-  body.hobbies.forEach((hobby) => {
-    if (typeof hobby != 'string' || hobby == '') return false;
-  });
+export function validateBody(body: User): string {
+  const keys = Object.keys(body);
+  if (!keys.includes('username'))
+    return 'Required username property is missing';
+  if (!keys.includes('age')) return 'Required age property is missing';
+  if (!keys.includes('hobbies')) return 'Required hobbies property is missing';
+  for (let key of keys)
+    if (!['username', 'age', 'hobbies'].includes(key))
+      return `Request contains an invalid ${key} property`;
+
+  if (typeof body.username != 'string')
+    return 'Username property is not a string';
+  if (typeof body.age != 'number') return 'Age property is not a number';
+  if (!Array.isArray(body.hobbies)) return 'Hobbies property is not an array';
+  for (let hobby of body.hobbies)
+    if (typeof hobby != 'string')
+      return 'Hobbies property contains a non-string element';
+
   return '';
 }
