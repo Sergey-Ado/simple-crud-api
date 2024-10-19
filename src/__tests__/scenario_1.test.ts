@@ -3,7 +3,7 @@ import { User } from '../modules/types';
 import 'dotenv/config';
 
 describe('server should perform basic operations', () => {
-  const req = request(`http://localhost:${process.env.PORT}/api/users`);
+  const req = request(`http://localhost:${process.env.PORT || 3000}/api/users`);
 
   const user: User = {
     username: 'John Doe',

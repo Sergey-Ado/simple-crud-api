@@ -6,7 +6,6 @@ const dataBase: User[] = [];
 
 export function get(id: string): ResponseMessage {
   const user = dataBase.find((s) => s.id == id);
-  console.log(user);
   if (!user)
     return { code: 404, message: JSON.stringify('UserId does not exist') };
   return { code: 200, message: user };
@@ -24,7 +23,6 @@ export function post(id: string, body: string): ResponseMessage {
   if (resValidate) return { code: 400, message: resValidate };
 
   const newUser = { id: newUuid(), ...userBody };
-  console.log(newUser);
   dataBase.push(newUser);
   return { code: 201, message: newUser };
 }
