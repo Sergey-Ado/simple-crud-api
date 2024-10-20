@@ -22,15 +22,23 @@ if (cluster.isPrimary) {
     });
   }
 
-  const app = createServer(redirectHandler.bind(null, null, port, workerPorts));
-  const database = createServer(databaseHandler);
-
-  app.listen(port, () => {
-    console.log(`Server started on port ${port}...`);
-  });
-  database.listen(databasePort, () =>
-    console.log(`Database started on port ${databasePort}...`)
-  );
+  if (countCores == 1) {
+    const app = createServer(databaseHandler);
+    app.listen(port, () => {
+      console.log(`Server started on port ${port}...`);
+    });
+  } else {
+    const app = createServer(
+      redirectHandler.bind(null, null, port, workerPorts)
+    );
+    app.listen(port, () => {
+      console.log(`Server started on port ${port}...`);
+    });
+    const database = createServer(databaseHandler);
+    database.listen(databasePort, () =>
+      console.log(`Database started on port ${databasePort}...`)
+    );
+  }
 } else {
   const serverPort = +process.env.SERVER_PORT!;
   const port = +process.env.PORT!;
