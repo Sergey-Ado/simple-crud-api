@@ -50,6 +50,7 @@ npm run test
 
 1. The client communicates with the server via the port specified in `.env` file
 2. The client can be Postman or other similar applications
-3. The data in POST and PUT requests to the server must be sent in JSON format. Data must contain the required fields username (string), age (number) and hobbies (array of strings or empty array). The data must not contain any other fields
-4. Data from the server response is returned in JSON format
-5. Terminate the process via `ctrl+C`
+3. The server processes GET, POST, PUT and DELETE requests
+4. The data in POST and PUT requests to the server must be sent in JSON format. Data must contain the required fields username (string), age (number) and hobbies (array of strings or empty array). The data must not contain any other fields
+5. Data from the server response is returned in JSON format
+6. Terminate the process via `ctrl+C`
