@@ -5,7 +5,7 @@
 To install the application, complete the following commands in order
 
 ```
-git clone !https://github.com/Sergey-Ado/simple-crud-api.git
+git clone https://github.com/Sergey-Ado/simple-crud-api.git
 ```
 
 ```
