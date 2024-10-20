@@ -24,7 +24,9 @@ export async function readBody(req: IncomingMessage): Promise<string> {
       body += data;
     });
     req.on('end', () => res(body));
-    req.on('error', () => rej(new Error()));
+    req.on('error', (err) => {
+      rej(err);
+    });
   });
 }
 

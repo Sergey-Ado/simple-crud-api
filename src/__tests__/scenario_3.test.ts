@@ -1,7 +1,6 @@
 import request from 'supertest';
 import { User } from '../modules/types';
 import 'dotenv/config';
-import { v4 as uuid } from 'uuid';
 
 const req = request(`http://localhost:${process.env.PORT || 3000}/`);
 const endpoint = 'api/users/';

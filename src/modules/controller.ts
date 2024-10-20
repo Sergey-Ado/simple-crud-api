@@ -17,6 +17,6 @@ export function controller(
     case 'DELETE':
       return remove(id);
     default:
-      return { code: 404, message: 'Invalid method' };
+      return { code: 500, message: 'Errors on the server side' };
   }
 }
