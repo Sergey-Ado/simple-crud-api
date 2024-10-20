@@ -5,8 +5,7 @@
   "type": "module",
   "scripts": {
     "start:dev": "npx nodemon",
-    "start:build": "npx tsc",
-    "start:prod": "npm run start:build && node dist/index",
+    "start:prod": "npx webpack --mode production && node ./dist/index.cjs",
     "test": "jest"
   },
   "author": "Sergey Ado",

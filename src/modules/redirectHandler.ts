@@ -46,11 +46,6 @@ export function redirectHandler(
     if (reqInput.headers[header] && header != 'host')
       reqOut.setHeader(header, reqInput.headers[header]!);
 
-  reqInput.pipe(reqOut).on('error', () => {
-    resOut.statusCode = 500;
-    resOut.setHeader('content-type', 'application/json');
-    resOut.end(JSON.stringify('Errors on the server side'));
-  });
   reqInput.on('end', () => {
     if (typeof portOut == 'number') {
       console.log(
@@ -61,5 +56,12 @@ export function redirectHandler(
         `Server on port ${port} received a request from a client and sent it to the worker on port ${options.port}`
       );
     }
+  });
+
+  reqInput.pipe(reqOut).on('error', () => {
+    resOut.statusCode = 500;
+    resOut.setHeader('content-type', 'application/json');
+    resOut.write(JSON.stringify('Errors on the server side'));
+    resOut.end();
   });
 }

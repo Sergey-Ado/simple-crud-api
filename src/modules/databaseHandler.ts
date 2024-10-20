@@ -17,11 +17,13 @@ export async function databaseHandler(
       const response = controller(req.method, parse.message, body);
       res.setHeader('content-type', 'application/json');
       res.statusCode = response.code;
-      res.end(JSON.stringify(response.message));
+      res.write(JSON.stringify(response.message));
+      res.end();
     }
   } catch (e) {
     res.statusCode = 500;
     res.setHeader('content-type', 'application/json');
-    res.end(JSON.stringify('Errors on the server side'));
+    res.write(JSON.stringify('Errors on the server side'));
+    res.end();
   }
 }
