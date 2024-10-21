@@ -26,16 +26,28 @@ Based on the `.env.example` file, create a `.env` file and change the PORT if ne
 
 ##### To run the application use the following commands:
 
-Application in development mode
+Application without a cluster in development mode
 
 ```
 npm run start:dev
 ```
 
-Application in production mode
+Application without a cluster in production mode
 
 ```
 npm run start:prod
+```
+
+Application with a cluster in development mode
+
+```
+npm run start:multi:dev
+```
+
+Application with a cluster in production mode
+
+```
+npm run start:multi
 ```
 
 ##### Once the server, database and all workers have loaded (corresponding messages will be displayed in the console), you can send requests to the server

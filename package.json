@@ -4,13 +4,15 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "start:dev": "npx nodemon",
+    "start:dev": "npx nodemon --watch src --exec node --no-warnings=ExperimentalWarning --loader ts-node/esm src/index.ts --ext js,ts --ignore src/__tests__",
     "start:prod": "npx webpack --mode production && node ./dist/index.cjs",
+    "start:multi:dev": "npx nodemon --watch src --exec node --no-warnings=ExperimentalWarning --loader ts-node/esm src/index.ts --multi --ext js,ts --ignore src/__tests__",
+    "start:multi": "npx webpack --mode production && node ./dist/index.cjs --multi",
     "test": "jest"
   },
-  "author": "Sergey Ado",
+  "author": "Sergey-Ado",
   "license": "ISC",
-  "description": "",
+  "description": "To install the application, complete the following commands in order",
   "devDependencies": {
     "@types/jest": "^29.5.13",
     "@types/node": "^22.7.5",
@@ -30,5 +32,13 @@
   "dependencies": {
     "dotenv": "^16.4.5",
     "uuid": "^10.0.0"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Sergey-Ado/simple-crud-api.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Sergey-Ado/simple-crud-api/issues"
+  },
+  "homepage": "https://github.com/Sergey-Ado/simple-crud-api#readme"
 }

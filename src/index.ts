@@ -8,21 +8,13 @@ import { availableParallelism } from 'node:os';
 if (cluster.isPrimary) {
   const countCores = availableParallelism();
 
+  const multiStart = process.argv.includes('--multi');
+
   const port = +(process.env.PORT || 3000);
   const workerPorts: number[] = [];
-  const databasePort = port + countCores + 1;
+  const databasePort = port + countCores;
 
-  for (let i = 0; i < countCores; i++) {
-    const newPort = port + i + 1;
-    workerPorts.push(newPort);
-    cluster.fork({
-      SERVER_PORT: port,
-      PORT: newPort,
-      DATABASE_PORT: databasePort,
-    });
-  }
-
-  if (countCores == 1) {
+  if (!multiStart || countCores == 1) {
     const app = createServer(databaseHandler);
     app.listen(port, () => {
       console.log(`Server started on port ${port}...`);
@@ -38,6 +30,16 @@ if (cluster.isPrimary) {
     database.listen(databasePort, () =>
       console.log(`Database started on port ${databasePort}...`)
     );
+
+    for (let i = 1; i < countCores; i++) {
+      const newPort = port + i;
+      workerPorts.push(newPort);
+      cluster.fork({
+        SERVER_PORT: port,
+        PORT: newPort,
+        DATABASE_PORT: databasePort,
+      });
+    }
   }
 } else {
   const serverPort = +process.env.SERVER_PORT!;
