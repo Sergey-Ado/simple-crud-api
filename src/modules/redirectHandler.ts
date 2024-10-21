@@ -60,8 +60,8 @@ export function redirectHandler(
 
   reqInput.pipe(reqOut).on('error', () => {
     resOut.statusCode = 500;
-    resOut.setHeader('content-type', 'application/json');
-    resOut.write(JSON.stringify('Errors on the server side'));
+    resOut.setHeader('Content-Type', 'application/json');
+    resOut.write(JSON.stringify({ message: 'Errors on the server side' }));
     resOut.end();
   });
 }

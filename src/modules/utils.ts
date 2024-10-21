@@ -2,16 +2,25 @@ import { IncomingMessage } from 'http';
 import { validate } from 'uuid';
 import { ParseMessage, User } from './types';
 
-export function parseURL(url: string | undefined): ParseMessage {
-  if (!url) url = '/';
+export function parseURL(
+  url: string | undefined = '/',
+  method: string = 'GET'
+): ParseMessage {
+  while (/\/\//.test(url)) url = url.replace(/\/\//g, '/');
   if (url.slice(-1) != '/') url += '/';
   const members = url.split('/');
   if (members[1] != 'api' || members[2] != 'users')
     return { code: 404, message: 'Requests to non-existing endpoints' };
-  if (members.length == 4) return { code: 200, message: '' };
-  if (members.length == 5) {
+  if (members.length == 4) {
+    if (method == 'GET' || method == 'POST') return { code: 200, message: '' };
+    else return { code: 400, message: 'UserId not specified' };
+  }
+  if (
+    members.length == 5 &&
+    (method == 'GET' || method == 'PUT' || method == 'DELETE')
+  ) {
     if (validate(members[3])) return { code: 200, message: members[3] };
-    else return { code: 400, message: 'UserId is invalid' };
+    else return { code: 400, message: 'UserId is not uuid' };
   }
   return { code: 404, message: 'Requests to non-existing endpoints' };
 }

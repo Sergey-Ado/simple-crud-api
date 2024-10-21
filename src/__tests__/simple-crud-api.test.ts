@@ -108,15 +108,20 @@ describe('Server should respond with correct status codes if path provided is in
   );
 
   test('should be a status code 404 for POST request to api/users/invalidEndPoint', async () => {
-    const response = await req.post('invalidEndPoint');
+    const response = await req.post(endpoint + 'invalidEndPoint');
     expect(response.statusCode).toBe(404);
+  });
+
+  test('should be a status code 404 for PUT and DELETE without id', async () => {
+    let response = await req.put(endpoint);
+    expect(response.statusCode).toBe(400);
+
+    response = await req.delete(endpoint);
+    expect(response.statusCode).toBe(400);
   });
 
   test('should be a status code 400 for request with invalid id', async () => {
     let response = await req.get(endpoint + 'invalidId');
-    expect(response.statusCode).toBe(400);
-
-    response = await req.post(endpoint + 'invalidId');
     expect(response.statusCode).toBe(400);
 
     response = await req.put(endpoint + 'invalidId');
