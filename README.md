@@ -52,7 +52,7 @@ npm run start:multi
 
 ##### Once the server, database and all workers have loaded (corresponding messages will be displayed in the console), you can send requests to the server
 
-##### Tests are launched via a separate terminal with the command
+##### Tests check the application while it is running. Tests are launched via a separate terminal with the command
 
 ```
 npm run test
